@@ -1,7 +1,6 @@
 package com.java.training.controller;
 
 import com.java.training.entiry.EmployeeEntity;
-import com.java.training.model.Employee;
 import com.java.training.service.EmployeeService;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -9,10 +8,19 @@ import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+
+
 @Slf4j
 @RestController
 @RequestMapping("/emp")
 public class EmployeeController {
+
+    private final EmployeeService service;
+    @Autowired
+    public EmployeeController(EmployeeService service) {
+        this.service = service;
+    }
+
 
     @GetMapping(value="get-employee")
     public EmployeeEntity getEmployeeById(@RequestParam(name = "id") Long employeeId){
@@ -25,11 +33,7 @@ public class EmployeeController {
 
         return service.getEmployeeById(employeeId);
     }
-        private final EmployeeService service;
-        @Autowired
-        public EmployeeController(EmployeeService service) {
-            this.service = service;
-        }
+
 
         @GetMapping
         public List<EmployeeEntity> getEmployees() {
